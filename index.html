@@ -21,9 +21,10 @@
             --bg-end: #022C22;
             --bg-alt: #047857;
             --accent: #FBBF24; 
-            --accent-glow: rgba(251, 191, 36, 0.6);
+            --accent-glow: rgba(251, 191, 36, 0.7);
             --text-main: #ffffff;
             --mosque-tint: #022C22;
+            --pattern-op: 0.15;
         }
 
         body.theme-midnight {
@@ -31,8 +32,9 @@
             --bg-end: #020617;
             --bg-alt: #1e1b4b;
             --accent: #e2e8f0;
-            --accent-glow: rgba(226, 232, 240, 0.5);
+            --accent-glow: rgba(226, 232, 240, 0.6);
             --mosque-tint: #0f172a;
+            --pattern-op: 0.1;
         }
 
         body.theme-sunset {
@@ -40,8 +42,9 @@
             --bg-end: #450a0a;
             --bg-alt: #9a3412;
             --accent: #fde047;
-            --accent-glow: rgba(253, 224, 71, 0.6);
+            --accent-glow: rgba(253, 224, 71, 0.7);
             --mosque-tint: #3f0909;
+            --pattern-op: 0.2;
         }
 
         * {
@@ -112,52 +115,86 @@
             color: #000;
         }
 
+        /* ================= CARD STYLES ================= */
         .card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(0,0,0,0.4));
-            backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(0,0,0,0.6));
+            backdrop-filter: blur(20px);
             width: 100%;
-            border-radius: 20px;
+            border-radius: 25px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            min-height: 520px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 0 2px rgba(255,255,255,0.1);
+            min-height: 560px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 40px 20px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(251, 191, 36, 0.3);
             transition: all 0.5s ease;
+        }
+
+        /* Islamic Geometric Pattern Overlay */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(var(--accent) 1px, transparent 1px), radial-gradient(var(--accent) 1px, transparent 1px);
+            background-position: 0 0, 20px 20px;
+            background-size: 40px 40px;
+            opacity: var(--pattern-op);
+            z-index: 0;
+            pointer-events: none;
         }
 
         .card::before {
             content: '';
             position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
+            top: -30%; left: -30%;
+            width: 160%; height: 160%;
             background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
-            opacity: 0.2;
-            z-index: -1;
+            opacity: 0.25;
+            z-index: 0;
             pointer-events: none;
         }
 
-        .moon {
+        /* Eid Elements: Moon, Stars & Shemai */
+        .moon-icon {
             position: absolute;
-            top: 30px; right: 30px;
+            top: 25px; right: 25px;
             width: 70px; height: 70px;
-            border-radius: 50%;
-            box-shadow: -15px 15px 0 0 var(--accent);
             animation: float 4s ease-in-out infinite;
-            z-index: 0;
+            z-index: 1;
+            filter: drop-shadow(0 0 15px var(--accent-glow));
+        }
+
+        .star {
+            position: absolute;
+            fill: var(--accent);
+            animation: twinkle 3s infinite alternate;
+            z-index: 1;
+        }
+        .star-1 { top: 40px; left: 40px; width: 20px; height: 20px; animation-delay: 0s; }
+        .star-2 { top: 120px; right: 100px; width: 12px; height: 12px; animation-delay: 1s; }
+        .star-3 { top: 100px; left: 80px; width: 15px; height: 15px; animation-delay: 0.5s; }
+
+        .shemai-bowl {
+            position: absolute;
+            bottom: 120px; right: 20px;
+            width: 80px; height: 80px;
+            z-index: 2;
+            animation: float 5s ease-in-out infinite reverse;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
         }
 
         .mosque-bg {
             position: absolute;
             bottom: -5px; left: 0;
             width: 100%;
-            z-index: 0;
+            z-index: 1;
             opacity: 0.95;
+            filter: drop-shadow(0 -5px 15px rgba(0,0,0,0.5));
         }
 
         .mosque-fill {
@@ -168,15 +205,39 @@
         .card-content {
             z-index: 5;
             width: 100%;
+            position: relative;
         }
         
+        .eid-badge {
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid var(--accent);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
         h1.title {
             font-family: 'Amiri', serif;
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             color: var(--accent);
-            margin-bottom: 5px;
-            text-shadow: 0 4px 15px var(--accent-glow);
+            margin-bottom: 0px;
+            text-shadow: 0 4px 20px var(--accent-glow);
             letter-spacing: 2px;
+            line-height: 1.1;
+        }
+
+        .title-bn {
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 25px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
         .subtitle {
@@ -184,6 +245,7 @@
             margin-bottom: 25px;
             opacity: 0.9;
             color: #e2e8f0;
+            font-weight: 300;
         }
 
         .controls {
@@ -191,6 +253,8 @@
             flex-direction: column;
             gap: 15px;
             width: 100%;
+            position: relative;
+            z-index: 10;
         }
 
         .name-input {
@@ -198,7 +262,7 @@
             padding: 15px;
             border-radius: 12px;
             border: 2px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             color: white;
             font-size: 1.1rem;
             text-align: center;
@@ -209,7 +273,8 @@
 
         .name-input:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent-glow);
+            box-shadow: 0 0 20px var(--accent-glow);
+            background: rgba(0,0,0,0.7);
         }
 
         .btn-primary {
@@ -229,7 +294,7 @@
         }
 
         .btn-primary:active { transform: scale(0.95); }
-        .btn-primary:hover { transform: translateY(-3px); filter: brightness(1.1); }
+        .btn-primary:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 8px 25px var(--accent-glow); }
 
         .wish-result {
             display: none;
@@ -237,13 +302,13 @@
         }
 
         .wish-result .name-highlight {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-family: 'Hind Siliguri', sans-serif;
             color: #ffffff;
             display: block;
             margin: 5px 0;
             font-weight: 700;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 0 3px 15px rgba(0,0,0,0.8);
             word-wrap: break-word;
         }
 
@@ -251,11 +316,11 @@
             margin: 15px auto 25px auto;
             position: relative;
             display: inline-block;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.4);
             padding: 10px 25px;
             border-radius: 30px;
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             backdrop-filter: blur(5px);
         }
 
@@ -271,10 +336,8 @@
             font-family: 'Hind Siliguri', sans-serif;
             font-size: 1.6rem;
             font-weight: 700;
-            background: linear-gradient(45deg, #FBBF24, #fde047, #f59e0b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0px 4px 15px rgba(251, 191, 36, 0.3);
+            color: var(--accent);
+            text-shadow: 0px 4px 15px var(--accent-glow);
             letter-spacing: 1px;
         }
 
@@ -286,6 +349,7 @@
             color: #f8fafc;
             font-weight: 400;
             transition: opacity 0.3s ease;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
         }
 
         .btn-change-wish {
@@ -299,6 +363,8 @@
             margin-top: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
         }
         .btn-change-wish:hover { background: rgba(255, 255, 255, 0.2); border-color: var(--accent); }
 
@@ -397,7 +463,6 @@
         .close-gift { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; color: #cbd5e1; cursor: pointer; transition: 0.3s; }
         .close-gift:hover { color: #f43f5e; }
 
-        /* ================= SPIN WHEEL CSS (MODIFIED FOR HTML2CANVAS) ================= */
         .wheel-container {
             position: relative;
             width: 240px;
@@ -411,10 +476,9 @@
             border: 5px solid #FBBF24;
             position: relative;
             overflow: hidden;
-            background-color: #ffffff; /* Fallback */
+            background-color: #ffffff; 
             box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
         }
-        /* New class for SVG background perfectly supported by html2canvas */
         .wheel-bg-svg {
             position: absolute;
             top: 0; left: 0;
@@ -428,7 +492,7 @@
             height: 100%;
             top: 0; left: 0;
             border-radius: 50%;
-            z-index: 1; /* Keep text above the SVG */
+            z-index: 1; 
         }
         .segment {
             position: absolute;
@@ -462,47 +526,15 @@
             z-index: 10;
             filter: drop-shadow(-2px 0px 5px rgba(0,0,0,0.8));
         }
-        #spinBtn {
-            width: 100%;
-            border-radius: 30px;
-        }
-
+        #spinBtn { width: 100%; border-radius: 30px; }
         #downloadSalamiBtn {
-            width: 100%;
-            border-radius: 30px;
-            background: linear-gradient(45deg, #10b981, #059669);
-            color: white;
-            border: none;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            width: 100%; border-radius: 30px; background: linear-gradient(45deg, #10b981, #059669); color: white; border: none; padding: 15px; font-size: 1.1rem; font-weight: 700; cursor: pointer; box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4); transition: all 0.3s ease; margin-top: 10px;
         }
-        #downloadSalamiBtn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.6);
-        }
+        #downloadSalamiBtn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.6); }
 
-        /* ================= SOCIAL BAR AD CSS ================= */
-        .social-bar-ad {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #ffffff;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-            text-align: center;
-            z-index: 99999;
-            min-height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        /* Animations */
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes twinkle { 0% { opacity: 0.3; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse-gift { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(244, 63, 94, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); } }
         @keyframes pulse-reset { 0%, 100% { box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4); } 50% { box-shadow: 0 5px 25px rgba(99, 102, 241, 0.8); } }
@@ -512,25 +544,61 @@
 
     <div class="app-wrapper">
         <div class="theme-selector">
-            <i class="fa-solid fa-moon"></i>
+            <i class="fa-solid fa-palette"></i>
             <label for="themeSelect">Vibes:</label>
             <select id="themeSelect" onchange="changeTheme()">
-                <option value="ramadan">Ramadan Classic</option>
-                <option value="midnight">Midnight Moon</option>
-                <option value="sunset">Sunset Lantern</option>
+                <option value="ramadan">Classic Ramadan</option>
+                <option value="midnight">Midnight Stars</option>
+                <option value="sunset">Sunset Glow</option>
             </select>
         </div>
 
         <div class="card" id="greetingCard">
-            <div class="moon"></div>
+            <!-- Stars SVG Elements -->
+            <svg class="star star-1" viewBox="0 0 24 24"><path d="M12 0l3.09 8.91L24 12l-8.91 3.09L12 24l-3.09-8.91L0 12l8.91-3.09z"/></svg>
+            <svg class="star star-2" viewBox="0 0 24 24"><path d="M12 0l3.09 8.91L24 12l-8.91 3.09L12 24l-3.09-8.91L0 12l8.91-3.09z"/></svg>
+            <svg class="star star-3" viewBox="0 0 24 24"><path d="M12 0l3.09 8.91L24 12l-8.91 3.09L12 24l-3.09-8.91L0 12l8.91-3.09z"/></svg>
+
+            <!-- Crescent Moon SVG -->
+            <svg class="moon-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 5 A45 45 0 1 0 95 50 A35 35 0 1 1 50 5 Z" fill="var(--accent)"/>
+            </svg>
+
+            <!-- Shemai Bowl SVG -->
+            <svg class="shemai-bowl" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+                <!-- Warm Glow Behind Bowl -->
+                <circle cx="50" cy="50" r="40" fill="var(--accent-glow)" opacity="0.3" filter="blur(10px)"/>
+                <!-- Bowl Base & Shadow -->
+                <ellipse cx="50" cy="65" rx="35" ry="10" fill="#000" opacity="0.3"/>
+                <path d="M15 40 Q50 90 85 40 Z" fill="var(--accent)"/>
+                <path d="M15 40 Q50 55 85 40 Q50 25 15 40 Z" fill="#d97706"/>
+                <!-- Shemai (Noodles/Vermicelli) inside -->
+                <path d="M25 38 Q35 20 45 38 T65 35 T75 38" stroke="#fef08a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M30 42 Q40 25 55 40 T70 42" stroke="#fef08a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <!-- Pistachio / Almond garnish -->
+                <circle cx="45" cy="32" r="2.5" fill="#22c55e"/>
+                <circle cx="55" cy="35" r="2" fill="#22c55e"/>
+                <circle cx="50" cy="28" r="2" fill="#ef4444"/> <!-- Cherry/Raisin -->
+                <!-- Steam Lines -->
+                <path d="M40 20 Q35 10 45 0" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.5" stroke-linecap="round"/>
+                <path d="M60 22 Q65 12 55 2" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.5" stroke-linecap="round"/>
+            </svg>
+
+            <!-- Mosque Silhouette -->
             <div class="mosque-bg">
-                <svg viewBox="0 0 800 200" preserveAspectRatio="none" style="width:100%; height:140px;" xmlns="http://www.w3.org/2000/svg">
-                    <path class="mosque-fill" d="M0,200 L0,150 L50,150 L50,100 L60,80 L70,100 L70,150 L200,150 C200,150 250,60 300,60 C350,60 400,150 400,150 L500,150 L500,80 L515,50 L530,80 L530,150 L650,150 C650,150 700,80 750,80 C800,80 800,150 800,150 L800,200 Z" />
+                <svg viewBox="0 0 800 200" preserveAspectRatio="none" style="width:100%; height:160px;" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Layer 1 (Back Domes) -->
+                    <path fill="var(--mosque-tint)" opacity="0.6" d="M100,200 L100,120 C100,120 150,50 200,50 C250,50 300,120 300,120 L300,200 Z" />
+                    <path fill="var(--mosque-tint)" opacity="0.6" d="M500,200 L500,120 C500,120 550,50 600,50 C650,50 700,120 700,120 L700,200 Z" />
+                    <!-- Layer 2 (Main Domes and Minarets) -->
+                    <path class="mosque-fill" d="M0,200 L0,150 L30,150 L30,80 L45,50 L60,80 L60,150 L250,150 C250,150 320,40 400,40 C480,40 550,150 550,150 L740,150 L740,80 L755,50 L770,80 L770,150 L800,150 L800,200 Z" />
                 </svg>
             </div>
 
             <div class="card-content">
+                <span class="eid-badge"><i class="fa-solid fa-star-and-crescent"></i> Festival of Joy</span>
                 <h1 class="title">Eid Mubarak</h1>
+                <h2 class="title-bn">ঈদ মোবারক</h2>
                 
                 <div id="inputSection">
                     <p class="subtitle" style="font-family: 'Hind Siliguri', sans-serif;">কার জন্য কার্ড বানাচ্ছেন এবং আপনার নাম দিন!</p>
@@ -552,7 +620,7 @@
                         <div class="sender-signature-text" id="displaySenderName"></div>
                     </div>
                     
-                    <div id="wishMessage" class="wish-message">ঈদের এই পবিত্র দিনে তোমার জীবন ভরে উঠুক অনাবিল আনন্দে। মহান আল্লাহ তোমার সকল নেক আশা কবুল করুন। 🌙 ঈদ মোবারক!</div>
+                    <div id="wishMessage" class="wish-message">ঈদের এই পবিত্র দিনে তোমার জীবন ভরে উঠুক অনাবিল আনন্দে, সাথে থাকুক মিষ্টি শেমাইয়ের স্বাদ। মহান আল্লাহ তোমার সকল নেক আশা কবুল করুন। 🌙 ঈদ মোবারক!</div>
                     
                     <button class="btn-change-wish" onclick="changeWishMessage()" id="changeTextBtn">
                         <i class="fa-solid fa-feather"></i> লেখা পরিবর্তন করুন
@@ -563,11 +631,11 @@
 
         <div class="actions-wrapper" id="actionsSection">
             <button class="btn-action btn-gift" onclick="openGift()">
-                <i class="fa-solid fa-gift"></i> সালামি নিন 🎁
+                <i class="fa-solid fa-gift"></i> সালামি স্পিন করুন 🎁
             </button>
 
             <button class="btn-action btn-reset" onclick="resetApp()">
-                <i class="fa-solid fa-paper-plane"></i> আপনার বন্ধুকে সালামি পাঠান
+                <i class="fa-solid fa-paper-plane"></i> অন্য কাউকে পাঠান
             </button>
 
             <button class="btn-action btn-download" onclick="downloadImage()">
@@ -596,7 +664,6 @@
                 <div class="pointer"></div>
                 <div class="wheel" id="wheel">
                     
-                    <!-- SVG Background Added to fix HTML2Canvas Conic-Gradient bug -->
                     <svg class="wheel-bg-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                         <path d="M50 50 L50 0 A50 50 0 0 1 85.355 14.645 Z" fill="#ef4444" />
                         <path d="M50 50 L85.355 14.645 A50 50 0 0 1 100 50 Z" fill="#f97316" />
@@ -629,15 +696,10 @@
         </div>
     </div>
 
-    <!-- ================= SOCIAL BAR AD PLACEMENT ================= -->
-    <div class="social-bar-ad" id="socialBarContainer">
-        <span style="color: #666; font-size: 14px;">Social Bar Ad Placement</span>
-    </div>
-
     <!-- JavaScript Functions -->
     <script>
         const wishes =[
-            "ঈদের এই পবিত্র দিনে তোমার জীবন ভরে উঠুক অনাবিল আনন্দে। মহান আল্লাহ তোমার সকল নেক আশা কবুল করুন। 🌙 ঈদ মোবারক!",
+            "ঈদের এই পবিত্র দিনে তোমার জীবন ভরে উঠুক অনাবিল আনন্দে, সাথে থাকুক মিষ্টি শেমাইয়ের স্বাদ। মহান আল্লাহ তোমার সকল নেক আশা কবুল করুন। 🌙 ঈদ মোবারক!",
             "নতুন চাঁদ, নতুন দিন, আজ হলো খুশির দিন। ঈদ এসেছে হাসিমুখে, আনন্দ থাকুক তোমার বুকে। 🕌 ঈদ মোবারক!",
             "ঈদের আনন্দ ছড়িয়ে পড়ুক তোমার জীবনের প্রতিটি প্রান্তে। পরিবার ও আপনজনদের নিয়ে সুন্দর কাটুক তোমার ঈদ। ✨ ঈদ মোবারক!",
             "এক মাসের সিয়াম সাধনার পর এলো খুশির ঈদ। এই আনন্দঘন মুহূর্তে তোমার সব দুঃখ-কষ্ট দূর হয়ে যাক। 💫 ঈদ মোবারক!",
@@ -674,10 +736,7 @@
             (function frame() {
                 confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors:['#FBBF24', '#ffffff', '#10b981'] });
                 confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors:['#FBBF24', '#ffffff', '#10b981'] });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
+                if (Date.now() < end) requestAnimationFrame(frame);
             }());
         }
 
@@ -688,12 +747,7 @@
             document.getElementById('inputSection').style.display = 'none';
             document.getElementById('resultSection').style.display = 'block';
             document.getElementById('actionsSection').style.display = 'flex';
-
-            if(isCreator) {
-                document.getElementById('shareRow').style.display = 'flex';
-            } else {
-                document.getElementById('shareRow').style.display = 'none';
-            }
+            document.getElementById('shareRow').style.display = isCreator ? 'flex' : 'none';
 
             fireConfetti();
         }
@@ -703,40 +757,30 @@
             const senderInput = document.getElementById('senderNameInput');
             const name = nameInput.value.trim();
             const sender = senderInput.value.trim();
-            
             let hasError = false;
 
-            if(!name) {
-                nameInput.style.border = "2px solid #ef4444";
-                nameInput.style.boxShadow = "0 0 15px rgba(239, 68, 68, 0.5)";
-                setTimeout(() => { nameInput.style.border = "2px solid rgba(255,255,255,0.2)"; }, 1000);
-                hasError = true;
-            }
-
-            if(!sender) {
-                senderInput.style.border = "2px solid #ef4444";
-                senderInput.style.boxShadow = "0 0 15px rgba(239, 68, 68, 0.5)";
-                setTimeout(() => { senderInput.style.border = "2px solid rgba(255,255,255,0.2)"; }, 1000);
-                hasError = true;
-            }
-
+            if(!name) { showError(nameInput); hasError = true; }
+            if(!sender) { showError(senderInput); hasError = true; }
             if(hasError) return;
 
             try {
                 let currentUrl = window.location.href.split('?')[0];
                 let shareUrl = currentUrl + "?name=" + encodeURIComponent(name) + "&sender=" + encodeURIComponent(sender);
                 window.history.pushState({}, "", shareUrl);
-            } catch (e) {
-                console.warn("URL Update failed");
-            }
+            } catch (e) { console.warn("URL Update failed"); }
 
             setupCard(name, sender, true);
+        }
+
+        function showError(element) {
+            element.style.border = "2px solid #ef4444";
+            element.style.boxShadow = "0 0 15px rgba(239, 68, 68, 0.5)";
+            setTimeout(() => { element.style.border = "2px solid rgba(255,255,255,0.2)"; }, 1000);
         }
 
         function changeWishMessage() {
             currentWishIndex = (currentWishIndex + 1) % wishes.length;
             const wishEl = document.getElementById('wishMessage');
-            
             wishEl.style.opacity = 0;
             setTimeout(() => {
                 wishEl.innerText = wishes[currentWishIndex];
@@ -745,9 +789,7 @@
         }
 
         function openGift() {
-            const modal = document.getElementById('giftOverlay');
-            modal.classList.add('active');
-            
+            document.getElementById('giftOverlay').classList.add('active');
             const savedAmount = localStorage.getItem('salamiAmount');
 
             if (savedAmount) {
@@ -767,11 +809,6 @@
                 const name = document.getElementById('nameInput').value.trim() || "বন্ধু";
                 document.getElementById('giftDescText').innerHTML = `প্রিয় <b style="color: #FBBF24;">${name}</b>, স্পিন করুন এবং আপনার সালামি জিতে নিন!`;
             }
-            
-            confetti({
-                particleCount: 150, spread: 100, origin: { y: 0.5 },
-                colors:['#FBBF24', '#F59E0B', '#fbbf24'], shapes:['circle'], scalar: 1.2
-            });
         }
 
         function closeGift() {
@@ -784,7 +821,6 @@
             
             const S = Math.floor(Math.random() * 8) + 1;
             const amounts = {1: "১", 2: "১০", 3: "৫০", 4: "১০০", 5: "৫০০", 6: "১০০০", 7: "৫০০০", 8: "১০০"};
-            
             const A = (S - 1) * 45 + 22.5;
             const absoluteRotation = 360 * 5 + (360 - A);
 
@@ -795,7 +831,6 @@
             setTimeout(() => {
                 isSpinning = false;
                 const wonAmount = amounts[S];
-                
                 localStorage.setItem('salamiAmount', wonAmount);
 
                 document.getElementById('giftDescText').innerHTML = `অভিনন্দন! আপনি পেয়েছেন <br><b style="color: #FBBF24; font-size: 2rem; text-shadow: 0 2px 10px rgba(251,191,36,0.6);">${wonAmount} ৳</b><br> সালামি! 🎉`;
@@ -806,64 +841,37 @@
             }, 4000);
         }
 
-        /* ====== SALAMI DOWNLOAD FIX ====== */
         function downloadSalami() {
             const giftBoxInner = document.getElementById('giftBoxInner');
             const dlBtn = document.getElementById('downloadSalamiBtn');
             const closeBtn = document.querySelector('.close-gift');
 
-            dlBtn.style.display = 'none';
-            closeBtn.style.display = 'none';
+            dlBtn.style.display = 'none'; closeBtn.style.display = 'none';
 
             setTimeout(() => {
                 html2canvas(giftBoxInner, { scale: 3, useCORS: true, backgroundColor: null }).then(canvas => {
                     const link = document.createElement('a');
-                    link.download = `Eid_Salami_Result.png`;
+                    link.download = `Eid_Salami.png`;
                     link.href = canvas.toDataURL('image/png', 1.0);
                     link.click();
-                    
-                    dlBtn.style.display = 'block';
-                    closeBtn.style.display = 'block';
-                }).catch(err => {
-                    alert("ডাউনলোড করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।");
-                    dlBtn.style.display = 'block';
-                    closeBtn.style.display = 'block';
+                    dlBtn.style.display = 'block'; closeBtn.style.display = 'block';
                 });
             }, 100);
         }
 
-        /* ====== CARD DOWNLOAD VIBRANT FIX ====== */
         function downloadImage() {
             const card = document.getElementById('greetingCard');
             const btn = document.querySelector('.btn-download');
             const changeBtn = document.getElementById('changeTextBtn');
-            const senderText = document.getElementById('displaySenderName');
             
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> সেভ হচ্ছে...';
             changeBtn.style.display = 'none'; 
             
+            // Temporary styles for perfect snapshot
             const originalBg = card.style.background;
-            const originalBorder = card.style.border;
-            const originalBoxShadow = card.style.boxShadow;
-            
-            const originalSenderColor = senderText.style.color;
-            const originalSenderBg = senderText.style.background;
-            const originalSenderWebkitClip = senderText.style.webkitBackgroundClip;
-            const originalSenderWebkitFill = senderText.style.webkitTextFillColor;
-            
             const bgStart = getComputedStyle(document.body).getPropertyValue('--bg-start').trim();
             const bgEnd = getComputedStyle(document.body).getPropertyValue('--bg-end').trim();
-            const accent = getComputedStyle(document.body).getPropertyValue('--accent').trim();
-            
             card.style.background = `linear-gradient(135deg, ${bgStart}, ${bgEnd})`;
-            card.style.border = `2px solid ${accent}`;
-            card.style.boxShadow = `0 0 20px ${accent}`;
-            
-            senderText.style.background = "none";
-            senderText.style.webkitBackgroundClip = "initial";
-            senderText.style.webkitTextFillColor = "initial";
-            senderText.style.color = "#FBBF24"; 
-            senderText.style.textShadow = "0 2px 5px rgba(0,0,0,0.6)";
 
             setTimeout(() => {
                 html2canvas(card, { scale: 3, useCORS: true, backgroundColor: null }).then(canvas => {
@@ -874,62 +882,34 @@
                     
                     btn.innerHTML = '<i class="fa-solid fa-download"></i> কার্ড সেভ করুন';
                     changeBtn.style.display = 'inline-block';
-                    
                     card.style.background = originalBg;
-                    card.style.border = originalBorder;
-                    card.style.boxShadow = originalBoxShadow;
-                    
-                    senderText.style.background = originalSenderBg;
-                    senderText.style.webkitBackgroundClip = originalSenderWebkitClip;
-                    senderText.style.webkitTextFillColor = originalSenderWebkitFill;
-                    senderText.style.color = originalSenderColor;
-                    senderText.style.textShadow = "0px 4px 15px rgba(251, 191, 36, 0.3)";
-
-                }).catch(err => {
-                    alert("Something went wrong with download.");
-                    btn.innerHTML = '<i class="fa-solid fa-download"></i> কার্ড সেভ করুন';
-                    changeBtn.style.display = 'inline-block';
-                    card.style.background = originalBg;
-                    card.style.border = originalBorder;
-                    senderText.style.background = originalSenderBg;
-                    senderText.style.webkitBackgroundClip = originalSenderWebkitClip;
-                    senderText.style.webkitTextFillColor = originalSenderWebkitFill;
                 });
             }, 300);
         }
 
-        function shareWhatsApp() {
+        function getShareText() {
             const name = document.getElementById('nameInput').value.trim();
             const sender = document.getElementById('senderNameInput').value.trim();
             const currentWish = document.getElementById('wishMessage').innerText;
             const url = window.location.href; 
-            
-            const text = `🌙 ঈদ মোবারক ${name}! 🌙\n\n${currentWish}\n\n✨ ভালোবাসা ও শুভেচ্ছান্তে: ${sender}\n\n🎁 তোমার কার্ডটি তৈরি করো আর ভার্চুয়াল সেলামি স্পিন করে জিতে নাও এখান থেকে:\n${url}`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+            return `🌙 ঈদ মোবারক ${name}! 🌙\n\n${currentWish}\n\n✨ ভালোবাসা ও শুভেচ্ছান্তে: ${sender}\n\n🎁 তোমার কার্ডটি তৈরি করো আর ভার্চুয়াল সেলামি স্পিন করে জিতে নাও এখান থেকে:\n${url}`;
+        }
+
+        function shareWhatsApp() {
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(getShareText())}`, '_blank');
         }
 
         function shareMessenger() {
-            const name = document.getElementById('nameInput').value.trim();
-            const sender = document.getElementById('senderNameInput').value.trim();
-            const currentWish = document.getElementById('wishMessage').innerText;
-            const url = window.location.href; 
-            
-            const text = `🌙 ঈদ মোবারক ${name}! 🌙\n\n${currentWish}\n\n✨ ভালোবাসা ও শুভেচ্ছান্তে: ${sender}\n\n🎁 তোমার কার্ডটি তৈরি করো আর ভার্চুয়াল সেলামি স্পিন করে জিতে নাও এখান থেকে:\n${url}`;
-            
+            const text = getShareText();
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(text).then(() => {
                     alert("মেসেজটি কপি করা হয়েছে! এখন আপনি এটি সরাসরি Messenger-এ পেস্ট করতে পারবেন।");
                 });
-            } else {
-                alert("দয়া করে লিংকটি কপি করে মেসেঞ্জারে শেয়ার করুন।");
-            }
-
+            } else { alert("দয়া করে লিংকটি কপি করে মেসেঞ্জারে শেয়ার করুন।"); }
+            
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            if (isMobile) {
-                window.location.href = `fb-messenger://share/?link=${encodeURIComponent(url)}`;
-            } else {
-                window.open('https://www.messenger.com/', '_blank');
-            }
+            if (isMobile) { window.location.href = `fb-messenger://share/?link=${encodeURIComponent(window.location.href)}`; } 
+            else { window.open('https://www.messenger.com/', '_blank'); }
         }
 
         function resetApp() {
@@ -939,36 +919,9 @@
             document.getElementById('resultSection').style.display = 'none';
             document.getElementById('actionsSection').style.display = 'none';
             closeGift();
-            
             localStorage.removeItem('salamiAmount');
-            
-            try {
-                let currentUrl = window.location.href.split('?')[0];
-                window.history.pushState({}, "", currentUrl);
-            } catch (e) {
-                console.warn("Could not clear URL");
-            }
+            try { window.history.pushState({}, "", window.location.href.split('?')[0]); } catch (e) {}
         }
-
-        let clickCounter = 0;
-        const targetClicksForAd = 3;
-
-        document.addEventListener('click', function(event) {
-            if(event.target.closest('#socialBarContainer')) return; 
-
-            clickCounter++;
-            
-            if (clickCounter >= targetClicksForAd) {
-                showPopunderAd();
-                clickCounter = 0;
-            }
-        });
-
-        function showPopunderAd() {
-            const popunderLink = "https://your-ad-network-link.com/"; 
-            window.open(popunderLink, "_blank");
-        }
-
     </script>
 </body>
                     </html>
