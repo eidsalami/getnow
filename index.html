@@ -61,7 +61,7 @@
             min-height: 100vh;
             color: var(--text-main);
             overflow-x: hidden;
-            padding: 20px 0 80px 0; /* Updated bottom padding for Social Bar Ad */
+            padding: 20px 0 80px 0;
         }
 
         @keyframes gradientBG {
@@ -360,7 +360,7 @@
             border-color: rgba(255, 255, 255, 0.6);
         }
 
-        /* ================= GIFT OVERLAY ================= */
+        /* ================= GIFT OVERLAY (UPDATED FOR BETTER DOWNLOAD) ================= */
         .gift-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -377,24 +377,24 @@
         .gift-overlay.active { display: flex; opacity: 1; }
 
         .gift-box {
-            background: linear-gradient(135deg, #ffffff, #f8fafc);
-            padding: 30px 20px;
+            background: linear-gradient(135deg, #022C22, #064E3B); /* Premium Dark Green Theme */
+            padding: 35px 20px;
             border-radius: 20px;
             text-align: center;
-            color: #1e293b;
+            color: #ffffff;
             max-width: 90%;
-            width: 330px;
+            width: 350px;
             transform: scale(0.8);
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
             position: relative;
-            border: 4px solid var(--accent);
+            border: 3px solid #FBBF24;
         }
         .gift-overlay.active .gift-box { transform: scale(1); }
         
-        .gift-title { font-size: 2.2rem; color: #064E3B; margin-bottom: 5px; font-weight: 700; }
-        .gift-desc { font-size: 1.1rem; color: #334155; margin-bottom: 20px; line-height: 1.6; }
-        .close-gift { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; color: #94a3b8; cursor: pointer; transition: 0.3s; }
+        .gift-title { font-size: 2.2rem; color: #FBBF24; margin-bottom: 5px; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+        .gift-desc { font-size: 1.1rem; color: #e2e8f0; margin-bottom: 25px; line-height: 1.6; }
+        .close-gift { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; color: #cbd5e1; cursor: pointer; transition: 0.3s; }
         .close-gift:hover { color: #f43f5e; }
 
         /* ================= SPIN WHEEL CSS ================= */
@@ -421,7 +421,7 @@
                 #3b82f6 270deg 315deg,
                 #8b5cf6 315deg 360deg
             );
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
         }
         .wheel-text {
             position: absolute;
@@ -458,9 +458,9 @@
             height: 0;
             border-top: 15px solid transparent;
             border-bottom: 15px solid transparent;
-            border-right: 25px solid #1e293b;
+            border-right: 25px solid #ffffff;
             z-index: 10;
-            filter: drop-shadow(-2px 0px 2px rgba(255,255,255,0.5));
+            filter: drop-shadow(-2px 0px 5px rgba(0,0,0,0.8));
         }
         #spinBtn {
             width: 100%;
@@ -492,11 +492,11 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #ffffff; /* এড এর ব্যাকগ্রাউন্ড কালার */
+            background: #ffffff;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
             text-align: center;
             z-index: 99999;
-            min-height: 60px; /* এড নেটওয়ার্ক অনুযায়ী হাইট পরিবর্তন করতে পারেন */
+            min-height: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -618,13 +618,8 @@
 
     <!-- ================= SOCIAL BAR AD PLACEMENT ================= -->
     <div class="social-bar-ad" id="socialBarContainer">
-        
-        <!-- আপনার সোসাল বার এড্স এর কোড/স্ক্রিপ্ট ঠিক এই জায়গায় বসান -->
         <span style="color: #666; font-size: 14px;">Social Bar Ad Placement</span>
-        
     </div>
-    <!-- ========================================================= -->
-
 
     <!-- JavaScript Functions -->
     <script>
@@ -745,7 +740,7 @@
             if (savedAmount) {
                 document.getElementById('spinBtn').style.display = 'none';
                 document.getElementById('downloadSalamiBtn').style.display = 'block';
-                document.getElementById('giftDescText').innerHTML = `আপনি আগেই স্পিন করেছেন এবং <b style="color: #f43f5e; font-size: 1.6rem;">${savedAmount} ৳</b> পেয়েছেন! 🎉`;
+                document.getElementById('giftDescText').innerHTML = `আপনি আগেই স্পিন করেছেন এবং <br><b style="color: #FBBF24; font-size: 1.8rem;">${savedAmount} ৳</b><br> পেয়েছেন! 🎉`;
             } else {
                 const wheel = document.getElementById('wheel');
                 wheel.style.transition = 'none';
@@ -757,7 +752,7 @@
                 isSpinning = false;
                 
                 const name = document.getElementById('nameInput').value.trim() || "বন্ধু";
-                document.getElementById('giftDescText').innerHTML = `প্রিয় <b style="color: #f43f5e;">${name}</b>, স্পিন করুন এবং আপনার সালামি জিতে নিন!`;
+                document.getElementById('giftDescText').innerHTML = `প্রিয় <b style="color: #FBBF24;">${name}</b>, স্পিন করুন এবং আপনার সালামি জিতে নিন!`;
             }
             
             confetti({
@@ -790,7 +785,7 @@
                 
                 localStorage.setItem('salamiAmount', wonAmount);
 
-                document.getElementById('giftDescText').innerHTML = `অভিনন্দন! আপনি পেয়েছেন <b style="color: #f43f5e; font-size: 1.6rem;">${wonAmount} ৳</b> সালামি! 🎉`;
+                document.getElementById('giftDescText').innerHTML = `অভিনন্দন! আপনি পেয়েছেন <br><b style="color: #FBBF24; font-size: 2rem; text-shadow: 0 2px 10px rgba(251,191,36,0.6);">${wonAmount} ৳</b><br> সালামি! 🎉`;
                 document.getElementById('spinBtn').style.display = 'none';
                 document.getElementById('downloadSalamiBtn').style.display = 'block';
                 
@@ -798,6 +793,7 @@
             }, 4000);
         }
 
+        /* ====== SALAMI DOWNLOAD FIX ====== */
         function downloadSalami() {
             const giftBoxInner = document.getElementById('giftBoxInner');
             const dlBtn = document.getElementById('downloadSalamiBtn');
@@ -807,10 +803,11 @@
             closeBtn.style.display = 'none';
 
             setTimeout(() => {
-                html2canvas(giftBoxInner, { scale: 2, useCORS: true, backgroundColor: "#ffffff" }).then(canvas => {
+                // scale 3 and transparent background ensures extremely high quality without ugly white boxes
+                html2canvas(giftBoxInner, { scale: 3, useCORS: true, backgroundColor: null }).then(canvas => {
                     const link = document.createElement('a');
                     link.download = `Eid_Salami_Result.png`;
-                    link.href = canvas.toDataURL('image/png');
+                    link.href = canvas.toDataURL('image/png', 1.0);
                     link.click();
                     
                     dlBtn.style.display = 'block';
@@ -823,33 +820,74 @@
             }, 100);
         }
 
+        /* ====== CARD DOWNLOAD VIBRANT FIX ====== */
         function downloadImage() {
             const card = document.getElementById('greetingCard');
             const btn = document.querySelector('.btn-download');
             const changeBtn = document.getElementById('changeTextBtn');
+            const senderText = document.getElementById('displaySenderName');
             
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> সেভ হচ্ছে...';
             changeBtn.style.display = 'none'; 
             
+            // ১. অরিজিনাল স্টাইল সেভ করে রাখা
             const originalBg = card.style.background;
-            const currentTheme = getComputedStyle(document.body).getPropertyValue('--bg-start').trim();
-            card.style.backgroundColor = currentTheme;
+            const originalBorder = card.style.border;
+            const originalBoxShadow = card.style.boxShadow;
+            
+            const originalSenderColor = senderText.style.color;
+            const originalSenderBg = senderText.style.background;
+            const originalSenderWebkitClip = senderText.style.webkitBackgroundClip;
+            const originalSenderWebkitFill = senderText.style.webkitTextFillColor;
+            
+            // ২. ডাউনলোডের জন্য টেম্পোরারি সলিড ও ব্রাইট কালার দেওয়া 
+            const bgStart = getComputedStyle(document.body).getPropertyValue('--bg-start').trim();
+            const bgEnd = getComputedStyle(document.body).getPropertyValue('--bg-end').trim();
+            const accent = getComputedStyle(document.body).getPropertyValue('--accent').trim();
+            
+            // কার্ডের ব্যাকগ্রাউন্ড উজ্জ্বল করা
+            card.style.background = `linear-gradient(135deg, ${bgStart}, ${bgEnd})`;
+            card.style.border = `2px solid ${accent}`;
+            card.style.boxShadow = `0 0 20px ${accent}`;
+            
+            // html2canvas টেক্সট গ্রেডিয়েন্ট সাপোর্ট করে না, তাই টেক্সট ব্রাইট সলিড গোল্ড কালার করা হলো
+            senderText.style.background = "none";
+            senderText.style.webkitBackgroundClip = "initial";
+            senderText.style.webkitTextFillColor = "initial";
+            senderText.style.color = "#FBBF24"; 
+            senderText.style.textShadow = "0 2px 5px rgba(0,0,0,0.6)";
 
             setTimeout(() => {
-                html2canvas(card, { scale: 2, useCORS: true }).then(canvas => {
+                // scale 3 দিয়ে হাই-কোয়ালিটি রেন্ডার করা হলো
+                html2canvas(card, { scale: 3, useCORS: true, backgroundColor: null }).then(canvas => {
                     const link = document.createElement('a');
                     link.download = `Eid_Mubarak_From_${document.getElementById('senderNameInput').value.trim()}.png`;
-                    link.href = canvas.toDataURL('image/png');
+                    link.href = canvas.toDataURL('image/png', 1.0);
                     link.click();
                     
+                    // ৩. আবার আগের স্টাইলে ফিরিয়ে আনা
                     btn.innerHTML = '<i class="fa-solid fa-download"></i> কার্ড সেভ করুন';
                     changeBtn.style.display = 'inline-block';
+                    
                     card.style.background = originalBg;
+                    card.style.border = originalBorder;
+                    card.style.boxShadow = originalBoxShadow;
+                    
+                    senderText.style.background = originalSenderBg;
+                    senderText.style.webkitBackgroundClip = originalSenderWebkitClip;
+                    senderText.style.webkitTextFillColor = originalSenderWebkitFill;
+                    senderText.style.color = originalSenderColor;
+                    senderText.style.textShadow = "0px 4px 15px rgba(251, 191, 36, 0.3)";
+
                 }).catch(err => {
                     alert("Something went wrong with download.");
                     btn.innerHTML = '<i class="fa-solid fa-download"></i> কার্ড সেভ করুন';
                     changeBtn.style.display = 'inline-block';
                     card.style.background = originalBg;
+                    card.style.border = originalBorder;
+                    senderText.style.background = originalSenderBg;
+                    senderText.style.webkitBackgroundClip = originalSenderWebkitClip;
+                    senderText.style.webkitTextFillColor = originalSenderWebkitFill;
                 });
             }, 300);
         }
@@ -906,33 +944,25 @@
             }
         }
 
-        // ================= POPUNDER AD LOGIC (৩ ক্লিকে একবার) =================
         let clickCounter = 0;
         const targetClicksForAd = 3;
 
         document.addEventListener('click', function(event) {
-            // যদি নিচের সোশ্যাল বার কন্টেইনারে ক্লিক লাগে, তবে পোপানডার কাউন্ট হবে না (অপশনাল)
             if(event.target.closest('#socialBarContainer')) return; 
 
             clickCounter++;
             
             if (clickCounter >= targetClicksForAd) {
                 showPopunderAd();
-                clickCounter = 0; // ৩ বার ক্লিক হলে আবার ০ তে রিসেট হবে
+                clickCounter = 0;
             }
         });
 
         function showPopunderAd() {
-            // ==============================================================
-            // আপনার পোপানডার এড্স এর লিংক বা কোড নিচে দিন:
-            // উদাহরণস্বরূপ, নিচের লিংকটি মুছে আপনার এড লিংকটি বসিয়ে দিন
             const popunderLink = "https://your-ad-network-link.com/"; 
-            // ==============================================================
-            
-            // নতুন ট্যাবে/উইন্ডোতে এড ওপেন করা
             window.open(popunderLink, "_blank");
         }
 
     </script>
 </body>
-</html>
+                            </html>
