@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eid Mubarak - Ramadan Vibes & Special Gift</title>
+    <title>Eid Mubarak - Salami Spin & Special Gift</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -64,7 +64,8 @@
             min-height: 100vh;
             color: var(--text-main);
             overflow-x: hidden;
-            padding: 20px 0 80px 0;
+            /* Added bottom padding so the social bar ad doesn't overlap content */
+            padding: 20px 0 100px 0; 
         }
 
         @keyframes gradientBG {
@@ -135,7 +136,6 @@
             transition: all 0.5s ease;
         }
 
-        /* Islamic Geometric Pattern Overlay */
         .card::after {
             content: '';
             position: absolute;
@@ -159,7 +159,6 @@
             pointer-events: none;
         }
 
-        /* Eid Elements: Moon, Stars & Shemai */
         .moon-icon {
             position: absolute;
             top: 25px; right: 25px;
@@ -538,6 +537,22 @@
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse-gift { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(244, 63, 94, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); } }
         @keyframes pulse-reset { 0%, 100% { box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4); } 50% { box-shadow: 0 5px 25px rgba(99, 102, 241, 0.8); } }
+        
+        /* Ad Styles */
+        .social-bar-ad {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px; /* Ad Height */
+            background: #111;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body class="theme-ramadan" id="appBody">
@@ -578,7 +593,7 @@
                 <!-- Pistachio / Almond garnish -->
                 <circle cx="45" cy="32" r="2.5" fill="#22c55e"/>
                 <circle cx="55" cy="35" r="2" fill="#22c55e"/>
-                <circle cx="50" cy="28" r="2" fill="#ef4444"/> <!-- Cherry/Raisin -->
+                <circle cx="50" cy="28" r="2" fill="#ef4444"/>
                 <!-- Steam Lines -->
                 <path d="M40 20 Q35 10 45 0" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.5" stroke-linecap="round"/>
                 <path d="M60 22 Q65 12 55 2" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.5" stroke-linecap="round"/>
@@ -587,10 +602,8 @@
             <!-- Mosque Silhouette -->
             <div class="mosque-bg">
                 <svg viewBox="0 0 800 200" preserveAspectRatio="none" style="width:100%; height:160px;" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Layer 1 (Back Domes) -->
                     <path fill="var(--mosque-tint)" opacity="0.6" d="M100,200 L100,120 C100,120 150,50 200,50 C250,50 300,120 300,120 L300,200 Z" />
                     <path fill="var(--mosque-tint)" opacity="0.6" d="M500,200 L500,120 C500,120 550,50 600,50 C650,50 700,120 700,120 L700,200 Z" />
-                    <!-- Layer 2 (Main Domes and Minarets) -->
                     <path class="mosque-fill" d="M0,200 L0,150 L30,150 L30,80 L45,50 L60,80 L60,150 L250,150 C250,150 320,40 400,40 C480,40 550,150 550,150 L740,150 L740,80 L755,50 L770,80 L770,150 L800,150 L800,200 Z" />
                 </svg>
             </div>
@@ -634,8 +647,9 @@
                 <i class="fa-solid fa-gift"></i> সালামি স্পিন করুন 🎁
             </button>
 
+            <!-- Changed Button Text Here -->
             <button class="btn-action btn-reset" onclick="resetApp()">
-                <i class="fa-solid fa-paper-plane"></i> অন্য কাউকে পাঠান
+                <i class="fa-solid fa-paper-plane"></i> আপনার বন্ধুকে সালামি পাঠান
             </button>
 
             <button class="btn-action btn-download" onclick="downloadImage()">
@@ -695,6 +709,35 @@
             </button>
         </div>
     </div>
+
+    <!-- ================= AD PLACEMENTS ================= -->
+
+    <!-- 1. Social Bar Ads Placeholder -->
+    <div class="social-bar-ad">
+        <!-- এখানে আপনার Social Bar Ad এর কোড/স্ক্রিপ্ট পেস্ট করুন -->
+        <span style="color: #aaa; font-size: 14px; font-family: sans-serif;">[ Social Bar Ad Placeholder ]</span>
+    </div>
+
+    <!-- 2. Popunder Ads Script Placeholder (3 Click Logic Added Below) -->
+    <script>
+        // Popunder Ad Logic (Triggers every 3 clicks anywhere on the page)
+        let clickCounter = 0;
+        
+        document.addEventListener('click', function() {
+            clickCounter++;
+            
+            if(clickCounter % 3 === 0) {
+                // ==========================================
+                // এখানে আপনার Popunder Ad এর লিঙ্ক বা স্ক্রিপ্ট বসান
+                // ==========================================
+                
+                console.log("Popunder Ad Triggered! (Click count: " + clickCounter + ")");
+                // উদাহরনস্বরুপ (কমেন্ট তুলে আপনার অ্যাড লিংক বসাতে পারেন):
+                // window.open('https://your-popunder-ad-link.com', '_blank');
+            }
+        });
+    </script>
+    <!-- ================================================= -->
 
     <!-- JavaScript Functions -->
     <script>
@@ -887,12 +930,12 @@
             }, 300);
         }
 
+        // Updated highly attractive share text
         function getShareText() {
-            const name = document.getElementById('nameInput').value.trim();
-            const sender = document.getElementById('senderNameInput').value.trim();
-            const currentWish = document.getElementById('wishMessage').innerText;
+            const name = document.getElementById('nameInput').value.trim() || "বন্ধু";
+            const sender = document.getElementById('senderNameInput').value.trim() || "আমি";
             const url = window.location.href; 
-            return `🌙 ঈদ মোবারক ${name}! 🌙\n\n${currentWish}\n\n✨ ভালোবাসা ও শুভেচ্ছান্তে: ${sender}\n\n🎁 তোমার কার্ডটি তৈরি করো আর ভার্চুয়াল সেলামি স্পিন করে জিতে নাও এখান থেকে:\n${url}`;
+            return `আরেহ ${name}! 🤩\n\n${sender} তোমার জন্য ঈদের স্পেশাল সালামি আর একটা সারপ্রাইজ গিফট পাঠিয়েছে! 🎁💸\n\nজলদি নিচের লিংকে ক্লিক করে তোমার সালামি স্পিন করে তুলে নাও! দেরি করলে কিন্তু মিস! 👇\n${url}`;
         }
 
         function shareWhatsApp() {
@@ -903,13 +946,18 @@
             const text = getShareText();
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(text).then(() => {
-                    alert("মেসেজটি কপি করা হয়েছে! এখন আপনি এটি সরাসরি Messenger-এ পেস্ট করতে পারবেন।");
+                    alert("মেসেজটি অটোমেটিক কপি করা হয়েছে! 🎁\n\nএখন Messenger ওপেন হলে শুধু মেসেজ বক্সে 'Paste (পেস্ট)' করে সেন্ড করে দিন।");
                 });
-            } else { alert("দয়া করে লিংকটি কপি করে মেসেঞ্জারে শেয়ার করুন।"); }
+            } else { 
+                alert("দয়া করে লিংকটি কপি করে মেসেঞ্জারে শেয়ার করুন।"); 
+            }
             
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            if (isMobile) { window.location.href = `fb-messenger://share/?link=${encodeURIComponent(window.location.href)}`; } 
-            else { window.open('https://www.messenger.com/', '_blank'); }
+            if (isMobile) { 
+                window.location.href = `fb-messenger://share/?link=${encodeURIComponent(window.location.href)}`; 
+            } else { 
+                window.open('https://www.messenger.com/', '_blank'); 
+            }
         }
 
         function resetApp() {
