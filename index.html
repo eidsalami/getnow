@@ -1,1 +1,281 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Salami 2024 - ঈদি উপহার</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+    <style>
+        :root {
+            --gold: #FBBF24;
+            --deep-green: #022C22;
+            --royal-green: #064E3B;
+            --glow: rgba(251, 191, 36, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; }
+
+        body {
+            background: radial-gradient(circle at center, var(--royal-green), #000);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* ঝলমলে ব্যাকগ্রাউন্ড এনিমেশন */
+        .stars-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .star {
+            position: absolute; background: white; border-radius: 50%;
+            animation: twinkle var(--d) infinite; opacity: 0;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* কার্ড ডিজাইন */
+        .app-wrapper {
+            width: 90%; max-width: 450px; z-index: 10;
+            position: relative;
+        }
+        .card {
+            background: rgba(2, 44, 34, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 30px 20px;
+            text-align: center;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 30px var(--glow);
+        }
+
+        .title-ar { font-family: 'Amiri', serif; font-size: 3rem; color: var(--gold); text-shadow: 0 0 15px var(--gold); }
+        .title-bn { font-size: 1.5rem; color: #fff; margin-bottom: 20px; letter-spacing: 1px; }
+
+        .name-input {
+            width: 100%; padding: 15px; border-radius: 12px;
+            border: 1px solid var(--gold); background: rgba(0,0,0,0.4);
+            color: #fff; text-align: center; font-size: 1.1rem; margin-bottom: 15px;
+            outline: none;
+        }
+
+        .btn-gold {
+            background: linear-gradient(45deg, #F59E0B, #B45309);
+            color: #fff; border: none; padding: 15px; border-radius: 12px;
+            font-weight: 700; width: 100%; cursor: pointer;
+            text-transform: uppercase; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .btn-gold:active { transform: scale(0.95); }
+
+        /* সালামি উইনার নোটিফিকেশন */
+        .winner-toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(255,255,255,0.95); color: #333;
+            padding: 10px 20px; border-radius: 50px;
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            z-index: 1000; transition: 0.5s; opacity: 0;
+        }
+        .winner-toast.show { opacity: 1; bottom: 40px; }
+        .winner-toast b { color: #B45309; }
+
+        /* গিফট বক্স এনিমেশন */
+        .gift-wrapper {
+            width: 120px; height: 120px; margin: 20px auto;
+            cursor: pointer; position: relative;
+        }
+        .box-body {
+            width: 100%; height: 80px; background: #be123c;
+            border-radius: 10px; position: absolute; bottom: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .box-lid {
+            width: 110%; height: 30px; background: #e11d48;
+            position: absolute; top: 10px; left: -5%;
+            border-radius: 5px; transition: 0.5s; z-index: 2;
+        }
+        .open .box-lid { transform: translateY(-40px) rotate(-10deg); opacity: 0; }
+        .money-reveal {
+            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+            font-size: 1.8rem; font-weight: 800; color: var(--gold);
+            opacity: 0; transition: 0.5s;
+        }
+        .open .money-reveal { opacity: 1; transform: translate(-50%, -60px); }
+
+        /* মোডাল */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: none;
+            justify-content: center; align-items: center; z-index: 1001;
+        }
+        .modal-content {
+            background: var(--deep-green); padding: 30px; border-radius: 20px;
+            border: 2px solid var(--gold); text-align: center; width: 90%; max-width: 380px;
+        }
+
+        .hidden { display: none; }
+        .share-count { font-size: 1.5rem; color: var(--gold); font-weight: 800; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container" id="stars"></div>
+
+    <!-- সালামি উইনার টিপেট -->
+    <div class="winner-toast" id="toast">
+        <i class="fa-solid fa-gift" style="color: #F59E0B;"></i>
+        <span id="toast-msg">আবির ৫০০৳ সালামি জিতেছে!</span>
+    </div>
+
+    <div class="app-wrapper">
+        <div class="card">
+            <h1 class="title-ar">عيد مبارك</h1>
+            <h2 class="title-bn">ঈদুল ফিতর স্পেশাল সালামি</h2>
+            
+            <div id="setup-ui">
+                <input type="text" id="name" class="name-input" placeholder="আপনার নাম লিখুন">
+                <button class="btn-gold" onclick="startApp()">সালামি সংগ্রহ করুন</button>
+            </div>
+
+            <div id="main-ui" class="hidden">
+                <h3 id="welcome-msg" style="color: var(--gold); font-size: 1.5rem;"></h3>
+                <p style="margin: 15px 0;">আপনার জন্য একটি বিশেষ ঈদি উপহার পাঠানো হয়েছে!</p>
+                
+                <button class="btn-gold" onclick="showGiftModal()" style="background: #be123c;">
+                    <i class="fa-solid fa-gift"></i> আমার সালামি নিন
+                </button>
+                <button class="btn-gold" onclick="goToAd()" style="margin-top: 10px; background: #1E3A8A;">
+                    <i class="fa-solid fa-paper-plane"></i> বন্ধুকে সালামি পাঠান
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- গিফট মোডাল -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2 style="color: var(--gold);">সালামি আনলক করুন</h2>
+            <p style="margin: 10px 0; font-size: 0.9rem;">সালামি পেতে হলে প্রথমে ২ জন বন্ধুকে শেয়ার করতে হবে!</p>
+            
+            <div class="share-count" id="s-count">0 / 2</div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-gold" onclick="doShare('wa')" style="background: #25D366;">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                </button>
+                <button class="btn-gold" onclick="doShare('ms')" style="background: #0084FF;">
+                    <i class="fa-brands fa-facebook-messenger"></i> Messenger
+                </button>
+            </div>
+
+            <div id="gift-box-area" class="hidden">
+                <p style="margin-top: 20px;">অভিনন্দন! এবার আপনার বক্সটি খুলুন।</p>
+                <div class="gift-wrapper" id="g-box" onclick="openBox()">
+                    <div class="box-lid"></div>
+                    <div class="box-body"></div>
+                    <div class="money-reveal" id="money-text">0৳</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const AD_LINK = "https://www.effectivegatecpm.com/ze1wnu9j4?key=dd8416dea3c46a4330cdfef8c14870e6";
+        let shares = 0;
+        const winners = ["আবির", "সুমাইয়া", "রাহাত", "মিতু", "সোহেল", "রিয়া", "তানজিল", "ইশতিয়াক", "নুসরাত", "জাহিদ"];
+        const amounts = [100, 200, 500, 1000, 1500, 2000, 50, 250];
+
+        // ব্যাকগ্রাউন্ড তারা তৈরি
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.width = star.style.height = Math.random() * 3 + 'px';
+            star.style.setProperty('--d', Math.random() * 3 + 2 + 's');
+            starsContainer.appendChild(star);
+        }
+
+        // উইনার নোটিফিকেশন লুপ
+        function showWinner() {
+            const name = winners[Math.floor(Math.random() * winners.length)];
+            const amount = amounts[Math.floor(Math.random() * amounts.length)];
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerHTML = `<b>${name}</b> ${amount}৳ সালামি জিতেছে!`;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        setInterval(showWinner, 6000);
+
+        function startApp() {
+            const name = document.getElementById('name').value;
+            if(!name) return alert("দয়া করে আপনার নাম লিখুন");
+            document.getElementById('welcome-msg').innerText = "স্বাগতম, " + name + "!";
+            document.getElementById('setup-ui').classList.add('hidden');
+            document.getElementById('main-ui').classList.remove('hidden');
+            confetti();
+        }
+
+        function showGiftModal() {
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function doShare(platform) {
+            window.open(AD_LINK, '_blank'); // অ্যাড লোড হবে
+            shares++;
+            document.getElementById('s-count').innerText = shares + " / 2";
+
+            const shareText = `সালামি তো সত্যি পাওয়া যাচ্ছে! আমি ${amounts[Math.floor(Math.random()*amounts.length)]}৳ পেলাম। তুইও চেষ্টা কর এই লিঙ্কে: ${window.location.href}`;
+            
+            if(platform === 'wa') window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(shareText));
+            else window.open("fb-messenger://share/?link=" + encodeURIComponent(window.location.href));
+
+            if(shares >= 2) {
+                document.getElementById('gift-box-area').classList.remove('hidden');
+                document.getElementById('s-count').style.color = "#22c55e";
+            }
+        }
+
+        function openBox() {
+            if(document.getElementById('g-box').classList.contains('open')) return;
+            
+            const winAmount = amounts[Math.floor(Math.random() * amounts.length)];
+            document.getElementById('money-text').innerText = winAmount + "৳";
+            document.getElementById('g-box').classList.add('open');
+            
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#FBBF24', '#ffffff', '#064E3B']
+            });
+
+            setTimeout(() => {
+                alert(`অভিনন্দন! আপনি ${winAmount}৳ সালামি জিতেছেন। আপনার বিকাশ নম্বর আমাদের সার্ভারে আপডেট হতে ২৪ ঘণ্টা সময় লাগতে পারে।`);
+                window.location.href = AD_LINK; // টাকা দেখানোর পর অ্যাডে যাবে
+            }, 2000);
+        }
+
+        function goToAd() {
+            window.open(AD_LINK, '_blank');
+            alert("বন্ধুকে সালামি পাঠাতে এই পেজের লিঙ্কটি কপি করে তাকে ইনবক্স করুন!");
+        }
+    </script>
+
+    <!-- ADSTERRA SOCIAL BAR -->
+    <script src="https://pl28896076.effectivegatecpm.com/4f/e3/8b/4fe38bf365d3a34e8034139286e5850c.js"></script>
+
+</body>
+  </html>
