@@ -706,25 +706,21 @@
     <!-- ৩. ADSTERRA DIRECT LINK (প্রতি ৩ ক্লিকে পপ-আপ ওপেন হবে) -->
     <!-- ========================================================== -->
     <script>
-        let clickCounter = 0;
-        
-        document.addEventListener('click', function() {
-            clickCounter++;
-            
-            // প্রতি ৩ ক্লিকে অ্যাড ওপেন হবে
-            if(clickCounter % 3 === 0) {
-                
-                // 👇 নিচের 'YOUR_ADSTERRA_DIRECT_LINK_HERE' লেখাটি মুছে আপনার ডাইরেক্ট লিংক বসান 👇
-                const adsterraDirectLink = "https://www.effectivegatecpm.com/ze1wnu9j4?key=dd8416dea3c46a4330cdfef8c14870e6";
-                // 👆 ---------------------------------------------------------------------- 👆
-                
-                // ডিফল্ট লিংক পরিবর্তন করলেই কেবল ওপেন হবে
-                if(adsterraDirectLink "https://www.effectivegatecpm.com/ze1wnu9j4?key=dd8416dea3c46a4330cdfef8c14870e6") {
-                    window.open(adsterraDirectLink, '_blank');
-                    console.log("Popunder Ad Triggered!");
-                }
-            }
-        });
+let clickCounter = 0;
+
+document.addEventListener('click', function() {
+    clickCounter++;
+
+    if(clickCounter % 3 === 0) {
+
+        const adsterraDirectLink = "https://www.effectivegatecpm.com/ze1wnu9j4?key=dd8416dea3c46a4330cdfef8c14870e6";
+
+        if(adsterraDirectLink !== "") {
+            window.open(adsterraDirectLink, '_blank');
+            console.log("Popunder Ad Triggered!");
+        }
+    }
+});
     </script>
 
     <!-- JavaScript Functions -->
