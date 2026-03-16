@@ -15,7 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
-        /* [পূর্বের সব CSS স্টাইল অপরিবর্তিত থাকবে] */
         :root {
             --bg-start: #064E3B; --bg-end: #022C22; --bg-alt: #047857;
             --accent: #FBBF24; --accent-glow: rgba(251, 191, 36, 0.7);
@@ -34,18 +33,12 @@
         .card { background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(0,0,0,0.6)); backdrop-filter: blur(20px); width: 100%; border-radius: 25px; position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 0 2px rgba(255,255,255,0.1); min-height: 560px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px 20px; text-align: center; border: 1px solid rgba(251, 191, 36, 0.3); transition: all 0.5s ease; }
         .card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(var(--accent) 1px, transparent 1px), radial-gradient(var(--accent) 1px, transparent 1px); background-position: 0 0, 20px 20px; background-size: 40px 40px; opacity: var(--pattern-op); z-index: 0; pointer-events: none; }
         .moon-icon { position: absolute; top: 25px; right: 25px; width: 70px; height: 70px; animation: float 4s ease-in-out infinite; z-index: 1; filter: drop-shadow(0 0 15px var(--accent-glow)); }
-        .star { position: absolute; fill: var(--accent); animation: twinkle 3s infinite alternate; z-index: 1; }
-        .star-1 { top: 40px; left: 40px; width: 20px; height: 20px; animation-delay: 0s; }
-        .star-2 { top: 120px; right: 100px; width: 12px; height: 12px; animation-delay: 1s; }
-        .star-3 { top: 100px; left: 80px; width: 15px; height: 15px; animation-delay: 0.5s; }
-        .shemai-bowl { position: absolute; bottom: 120px; right: 20px; width: 80px; height: 80px; z-index: 2; animation: float 5s ease-in-out infinite reverse; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
         .mosque-bg { position: absolute; bottom: -5px; left: 0; width: 100%; z-index: 1; opacity: 0.95; filter: drop-shadow(0 -5px 15px rgba(0,0,0,0.5)); }
         .mosque-fill { fill: var(--mosque-tint); transition: fill 0.5s ease; }
         .card-content { z-index: 5; width: 100%; position: relative; }
         .eid-badge { display: inline-block; background: rgba(251, 191, 36, 0.2); border: 1px solid var(--accent); padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; color: var(--accent); margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase; }
         h1.title { font-family: 'Amiri', serif; font-size: 3.8rem; color: var(--accent); margin-bottom: 0px; text-shadow: 0 4px 20px var(--accent-glow); letter-spacing: 2px; line-height: 1.1; }
         .title-bn { font-family: 'Hind Siliguri', sans-serif; font-size: 1.5rem; color: #fff; margin-bottom: 25px; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .subtitle { font-size: 0.95rem; margin-bottom: 25px; opacity: 0.9; color: #e2e8f0; font-weight: 300; }
         .controls { display: flex; flex-direction: column; gap: 15px; width: 100%; position: relative; z-index: 10; }
         .name-input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.5); color: white; font-size: 1.1rem; text-align: center; outline: none; transition: all 0.3s ease; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); }
         .btn-primary { background: linear-gradient(45deg, var(--accent), #d97706); color: #000; border: none; padding: 15px; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; box-shadow: 0 5px 20px var(--accent-glow); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
@@ -59,9 +52,6 @@
         .btn-gift { background: linear-gradient(45deg, #f43f5e, #f59e0b); animation: pulse-gift 2s infinite; border: 2px solid #fff; }
         .btn-reset { background: linear-gradient(45deg, #6366f1, #a855f7); color: white; padding: 16px 20px; font-size: 1.15rem; font-weight: 700; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 12px; }
         .btn-download { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); }
-        .share-row { display: flex; gap: 10px; }
-        .btn-wa { background: #25D366; flex: 1; }
-        .btn-messenger { background: #0084FF; flex: 1; }
         .gift-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 9999; opacity: 0; transition: opacity 0.5s ease; }
         .gift-overlay.active { display: flex; opacity: 1; }
         .gift-box { background: linear-gradient(135deg, #022C22, #064E3B); padding: 35px 20px; border-radius: 20px; text-align: center; color: #ffffff; max-width: 90%; width: 350px; transform: scale(0.8); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 20px 60px rgba(0,0,0,0.8); position: relative; border: 3px solid #FBBF24; }
@@ -72,7 +62,6 @@
         .pointer { position: absolute; top: 50%; right: -10px; transform: translateY(-50%); width: 0; height: 0; border-top: 15px solid transparent; border-bottom: 15px solid transparent; border-right: 25px solid #ffffff; z-index: 10; filter: drop-shadow(-2px 0px 5px rgba(0,0,0,0.8)); }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes twinkle { 0% { opacity: 0.3; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
     </style>
 </head>
 <body class="theme-ramadan" id="appBody">
@@ -89,7 +78,6 @@
         </div>
 
         <div class="card" id="greetingCard">
-            <!-- [SVG এবং Card Content আগের মতোই থাকবে] -->
             <svg class="moon-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 5 A45 45 0 1 0 95 50 A35 35 0 1 1 50 5 Z" fill="var(--accent)"/></svg>
             <div class="mosque-bg">
                 <svg viewBox="0 0 800 200" preserveAspectRatio="none" style="width:100%; height:160px;" xmlns="http://www.w3.org/2000/svg">
@@ -170,11 +158,10 @@
     </div>
 
     <script>
-        let generateWishClicks = 0;
+        let downloadClicks = 0; // ডাউনলোড বাটনের জন্য ক্লিক কাউন্টার
         let isSpinning = false;
         const AD_LINK = "https://www.effectivegatecpm.com/ze1wnu9j4?key=dd8416dea3c46a4330cdfef8c14870e6";
 
-        // অ্যাড ওপেন করার শক্তিশালী ফাংশন (পপ-আপ ব্লকার এড়াতে সাহায্য করে)
         function triggerAd() {
             const hiddenAnchor = document.createElement('a');
             hiddenAnchor.href = AD_LINK;
@@ -185,7 +172,7 @@
             document.body.removeChild(hiddenAnchor);
         }
 
-        // কার্ড তৈরি করুন বাটনের কাজ
+        // কার্ড তৈরি করুন বাটনের কাজ - এখন সরাসরি কাজ করবে
         function handleGenerateClick() {
             const name = document.getElementById('nameInput').value.trim();
             const sender = document.getElementById('senderNameInput').value.trim();
@@ -195,35 +182,42 @@
                 return;
             }
 
-            if (generateWishClicks === 0) {
+            // সরাসরি কার্ড তৈরি
+            document.getElementById('displayName').innerText = name;
+            document.getElementById('displaySenderName').innerText = sender;
+            document.getElementById('inputSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('actionsSection').style.display = 'flex';
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        }
+
+        // কার্ড সেভ করুন বাটনের কাজ - এখানে অ্যাড যোগ করা হয়েছে
+        function downloadImage() {
+            if (downloadClicks === 0) {
                 // প্রথম ক্লিকে অ্যাড ওপেন হবে
                 triggerAd();
-                generateWishClicks++;
+                downloadClicks++;
             } else {
-                // দ্বিতীয় ক্লিকে কার্ড তৈরি হবে
-                document.getElementById('displayName').innerText = name;
-                document.getElementById('displaySenderName').innerText = sender;
-                document.getElementById('inputSection').style.display = 'none';
-                document.getElementById('resultSection').style.display = 'block';
-                document.getElementById('actionsSection').style.display = 'flex';
-                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                // দ্বিতীয় ক্লিকে ইমেজ ডাউনলোড হবে
+                html2canvas(document.getElementById('greetingCard')).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'Eid_Wish.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                    // ডাউনলোড শেষে চাইলে কাউন্টার রিসেট করা যায়
+                    // downloadClicks = 0; 
+                });
             }
         }
 
-        // স্পিন বাটনের কাজ
         function handleSpinClick() {
             if(isSpinning) return;
-            
-            // স্পিন শুরুর সাথে সাথে অ্যাড ওপেন হবে
             triggerAd();
-
             isSpinning = true;
             const wheel = document.getElementById('wheel');
-            const randomDeg = Math.floor(Math.random() * 360) + 3600; // ১০ বার ঘুরবে
-            
+            const randomDeg = Math.floor(Math.random() * 360) + 3600;
             wheel.style.transition = 'transform 4s cubic-bezier(0.15, 0, 0.15, 1)';
             wheel.style.transform = `rotate(${randomDeg}deg)`;
-
             setTimeout(() => {
                 isSpinning = false;
                 alert("সালামি জেতার জন্য অভিনন্দন!");
@@ -233,19 +227,7 @@
         function openGift() { document.getElementById('giftOverlay').classList.add('active'); }
         function closeGift() { document.getElementById('giftOverlay').classList.remove('active'); }
         function changeTheme() { document.getElementById('appBody').className = `theme-${document.getElementById('themeSelect').value}`; }
-        
-        function downloadImage() {
-            html2canvas(document.getElementById('greetingCard')).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Eid_Wish.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        }
-
-        function resetApp() {
-            location.reload();
-        }
+        function resetApp() { location.reload(); }
     </script>
 </body>
-</html>
+                                                                                         </html>
